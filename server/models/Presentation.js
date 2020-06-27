@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const presentationSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
   },
@@ -10,8 +10,8 @@ const presentationSchema = new mongoose.Schema({
     ref: "users",
     required: true,
   },
-  file: {
-    type: Buffer,
+  filePath: {
+    type: String,
     required: true,
   },
 });

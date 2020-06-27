@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   sendServerErrorMsg: (res, error) => {
     console.log(error.message);
+    if (error.kind == "ObjectId") {
+      return res.status(404).send({ errors: [{ msg: "Object not found." }] });
+    }
     res.status(500).send({
       errors: [{ msg: "Sorry, something went wrong. Please try again later." }],
     });
