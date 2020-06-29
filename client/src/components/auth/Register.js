@@ -1,6 +1,10 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
 
+//redux
+import { connect } from "react-redux";
+import { register } from "./../../redux/actions/auth";
+
 //Components
 import FormGroup from "./../uiElements/FormElements/FormGroup";
 import LinkText from "./../uiElements/LinkText";
@@ -18,6 +22,11 @@ const Image = styled.img`
 `;
 
 const Register = (props) => {
+  const register = (e) => {
+    e.preventDefault();
+    props.register("Niclas", "niclastimm", "123455", "1234556r");
+  };
+
   return (
     <Fragment>
       <div className="container-fluid p-0">
@@ -26,7 +35,11 @@ const Register = (props) => {
             <div className="row justify-content-center no-gutters">
               <div className="col-6 no-gutters">
                 <HeroHeader>Register</HeroHeader>
-                <form>
+                <form
+                  onSubmit={(e) => {
+                    register(e);
+                  }}
+                >
                   <FormGroup
                     type="text"
                     label="Username"
@@ -91,5 +104,10 @@ const Register = (props) => {
     </Fragment>
   );
 };
+const mapStateToProps = (state) => ({
+  loading: state.auth.loading,
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
+});
 
-export default Register;
+export default connect(mapStateToProps, { register })(Register);

@@ -10,6 +10,7 @@ import "./styles/bootstrap-grid.min.css";
 import "./styles/grid-modified.css";
 
 //components
+import Navbar from "./components/Navigation/Navbar";
 import Alert from "./components/uiElements/Alert";
 import store from "./redux/store";
 import Login from "./components/auth/Login";
@@ -23,8 +24,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <Fragment>
-          <Alert />
           <Router>
+            <Alert />
+            <Navbar />
             <Switch>
               <Route path="/login" component={Login} exact />
               <Route path="/register" component={Register} exact />

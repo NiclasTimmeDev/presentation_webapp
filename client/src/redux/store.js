@@ -5,12 +5,14 @@ import thunk from "redux-thunk";
 //reducers
 import alert from "./reducers/alert";
 import spinner from "./reducers/spinner";
+import auth from "./reducers/auth";
 
 const initState = {};
 
 const rootReducer = combineReducers({
   alert,
   spinner,
+  auth,
 });
 
 const middleware = [thunk];
