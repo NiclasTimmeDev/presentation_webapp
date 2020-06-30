@@ -23,7 +23,8 @@ const Input = styled.input`
   transition: border-bottom 0.5s;
   margin-bottom: ${(props) => (props.error ? "1px" : props.theme.marginText)};
   &:hover {
-    border-bottom: 2px solid ${(props) => props.theme.secondaryCTA};
+    border-bottom: 2px solid
+      ${(props) => (props.error ? "red" : props.theme.secondaryCTA)};
   }
   &:focus {
     outline: none;
@@ -47,6 +48,7 @@ const FormGroup = (props) => {
         value={props.value}
         error={props.error}
         onChange={props.onChange}
+        type={props.type}
       />
       {props.error && <Error>{props.errorText}</Error>}
     </Wrapper>

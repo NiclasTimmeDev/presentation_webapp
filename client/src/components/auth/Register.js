@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 
 //redux
@@ -22,9 +22,31 @@ const Image = styled.img`
 `;
 
 const Register = (props) => {
+  /*===================
+  STATE
+  ===================*/
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    password_confirmed: "",
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const register = (e) => {
     e.preventDefault();
-    props.register("Niclas", "niclastimm", "123455", "1234556r");
+    props.register(
+      formData.username,
+      formData.email,
+      formData.password,
+      formData.password_confirmed
+    );
   };
 
   return (
@@ -45,40 +67,51 @@ const Register = (props) => {
                     label="Username"
                     name="username"
                     placeholder='e.g., "John Doe"'
-                    // error={Reference to error here}
-                    // errorText="Whats the error message?"
-                    // value={Enter value here}
-                    //onChange
+                    error={props.errors.username}
+                    errorText={props.errors.username && props.errors.username}
+                    value={formData.username}
+                    onChange={(e) => {
+                      handleInputChange(e);
+                    }}
                   />
                   <FormGroup
                     type="text"
                     label="Email"
                     name="email"
                     placeholder="e.g. 'john.doe@email.com'"
-                    // error={Reference to error here}
-                    // errorText="Whats the error message?"
-                    // value={Enter value here}
-                    //onChange
+                    errorText={props.errors.email && props.errors.email}
+                    error={props.errors.email}
+                    value={formData.email}
+                    onChange={(e) => {
+                      handleInputChange(e);
+                    }}
                   />
                   <FormGroup
                     type="password"
                     label="Password"
                     name="password"
                     placeholder="Enter a strong password"
-                    // error={Reference to error here}
-                    // errorText="Whats the error message?"
-                    // value={Enter value here}
-                    //onChange
+                    errorText={props.errors.password && props.errors.password}
+                    error={props.errors.password}
+                    value={formData.password}
+                    onChange={(e) => {
+                      handleInputChange(e);
+                    }}
                   />
                   <FormGroup
                     type="password"
                     label="Confirm password"
-                    name="confirm_password"
+                    name="password_confirmed"
                     placeholder="Confirm you password from above"
-                    // error={Reference to error here}
-                    // errorText="Whats the error message?"
-                    // value={Enter value here}
-                    //onChange
+                    errorText={
+                      props.errors.password_confirmed &&
+                      props.errors.password_confirmed
+                    }
+                    error={props.errors.password_confirmed}
+                    value={formData.password_confirmed}
+                    onChange={(e) => {
+                      handleInputChange(e);
+                    }}
                   />
                   <LinkText to="/termsandconditions">
                     By registering you accept our terms and conditions
@@ -108,6 +141,7 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   isAuthenticated: state.auth.isAuthenticated,
   user: state.auth.user,
+  errors: state.auth.registerError,
 });
 
 export default connect(mapStateToProps, { register })(Register);
